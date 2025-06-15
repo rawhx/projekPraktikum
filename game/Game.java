@@ -10,15 +10,13 @@ public class Game
     Scanner input = new Scanner(System.in);
     Random rand = new Random();
 
-    private Player player1;
-    private Player player2;
+    private Player[] player;
     private Weapon weapon;
     private boolean isSinglePlayer;
 
-    public Game(Player player1, Player player2, Weapon weapon, boolean isSinglePlayer)
+    public Game(Player[] player, Weapon weapon, boolean isSinglePlayer)
     {
-        this.player1 = player1;
-        this.player2 = player2;
+        this.player = player;
         this.weapon = weapon;
         this.isSinglePlayer = isSinglePlayer;
     }
@@ -38,64 +36,64 @@ public class Game
             System.out.println("randomizing first turn...");
             Thread.sleep(2500);
 
-            boolean player1Turn = rand.nextBoolean();
+            int currentIndex = rand.nextInt(player.length);
 
-            while(player1.getHealth() > 0 && player2.getHealth() > 0)
-            {
-                Player playerNow;
-                Player otherPlayer;
+            while (countPlayerActive() > 1) {
+                Player currentPlayer = player[currentIndex];
 
-                if(player1Turn == true)
+                if (currentPlayer.getHealth() <= 0)
                 {
-                    playerNow = player1;
-                    otherPlayer = player2;
+                    currentIndex = (currentIndex + 1) % player.length;
+                    continue;
                 }
-                else
-                {
-                    playerNow = player2;
-                    otherPlayer = player1;
-                }
-                
-                System.out.println("It's " + playerNow.getName() + "'s turn!");
+
+                System.out.println("\nIt's " + currentPlayer.getName() + "'s turn!");
                 Thread.sleep(1500);
                 System.out.println("-- Status --");
-                showStatus(player1, player2);
+                showStatus(player);
                 Thread.sleep(1500);
 
-                // Kalo single player, AI otomatis attack
-                if (isSinglePlayer && playerNow.getName().equals("Cool Guy")) 
+                Player target = getPlayerActive(currentPlayer);
+                if (target == null) 
+                {
+                    System.out.println("No valid targets remaining.");
+                    break;
+                }
+
+                if (isSinglePlayer && currentPlayer.getName().equals("Cool Guy")) 
                 {
                     System.out.println("\nCool Guy is making its move...");
                     Thread.sleep(1500);
-                    weapon.attack(otherPlayer);
+                    weapon.attack(target);
                 } 
-                else {
-                    while(true)
+                else 
+                {
+                    while (true)
                     {
-                        System.out.println("\n Yo " + playerNow.getName() + " input a number");
+                        System.out.println("\nYo " + currentPlayer.getName() + ", input a number:");
                         System.out.println("1. Life is all about gamble!!");
 
-                        int playerInput = input.nextInt();
-
-                        if(playerInput == 1)
+                        int inputOption = input.nextInt();
+                        if (inputOption == 1)
                         {
-                            weapon.attack(otherPlayer);
+                            weapon.attack(target);
                             break;
                         }
                         else
                         {
-                            System.out.println("invalid input, just throw your life on the table " + playerNow.getName() + " my guy");
+                            System.out.println("Invalid input, try again.");
                         }
                     }
                 }
 
-                // Kalau salah satu player mati, game over
-                if (otherPlayer.getHealth() <= 0) {
-                    System.out.println("\nGame Over! " + playerNow.getName() + " wins!");
+                if (countPlayerActive() == 1)
+                {
+                    Player winner = getWinnerPlayer();
+                    System.out.println("\nGame Over! " + winner.getName() + " wins!");
                     break;
                 }
 
-                player1Turn = !player1Turn;
+                currentIndex = (currentIndex + 1) % player.length;
             }
         }
         catch(InterruptedException e)
@@ -104,20 +102,40 @@ public class Game
         }
     }
 
-    private void showStatus(Player p1, Player p2)
-    {
-        System.out.println("Player 1");
-        System.out.println("+---------------+");
-        System.out.printf("| %-4s | %-5s |\n", "Name", "Health");
-        System.out.println("+---------------+");
-        System.out.printf("| %-5s | %-5d |\n", p1.getName(), p1.getHealth());
-        System.out.println("+---------------+");
+    private int countPlayerActive() {
+        int count = 0;
+        for (Player p : player) {
+            if (p.getHealth() > 0) count++;
+        }
+        return count;
+    }
 
-        System.out.println("\nPlayer 2");
-        System.out.println("+---------------+");
-        System.out.printf("| %-4s | %-5s |\n", "Name", "Health");
-        System.out.println("+---------------+");
-        System.out.printf("| %-5s | %-5d |\n", p2.getName(), p2.getHealth());
-        System.out.println("+---------------+");
+    private Player getWinnerPlayer() {
+        for (Player p : player) {
+            if (p.getHealth() > 0) return p;
+        }
+        return null;
+    }
+
+    private Player getPlayerActive(Player currentPlayer) {
+        for (Player p : player) {
+            if (!p.equals(currentPlayer) && p.getHealth() > 0) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    private void showStatus(Player[] player)
+    {
+        int countPlayer = 1;
+        for (Player p : player) {
+            System.out.println("Player " + countPlayer++);
+            System.out.println("+---------------+");
+            System.out.printf("| %-4s | %-5s |\n", "Name", "Health");
+            System.out.println("+---------------+");
+            System.out.printf("| %-5s | %-5d |\n", p.getName(), p.getHealth());
+            System.out.println("+---------------+");
+        }
     }
 }
