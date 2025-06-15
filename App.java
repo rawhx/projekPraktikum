@@ -13,6 +13,7 @@ public class App
         System.out.println("1. Single Player");
         System.out.println("2. vs Player");
         int respon = input.nextInt();
+        input.nextLine();
         
         if(respon == 1)
         {
