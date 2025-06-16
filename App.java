@@ -1,6 +1,8 @@
 import character.*;
 import weapon.*;
 import game.*;
+
+import java.util.Random;
 import java.util.Scanner;;
 
 public class App 
@@ -28,25 +30,33 @@ public class App
             System.out.println("Choose your weapon: ");
             System.out.println("1. Revolver");
             System.out.println("2. Double Barrel");
-            System.out.println("3. Revolver");
             Weapon currWeapon;
 
             while (true) {
                 int weaponChoice = input.nextInt();
                 input.nextLine();
+                
                 if (weaponChoice == 1) {
-                    currWeapon = new Revolver("Anaconda", 1);
-                    break;
+                    // Gacha revolver
+                    Random rand = new Random();
+                    boolean isLuck = rand.nextBoolean();
+                    if (isLuck) 
+                    {
+                        currWeapon = new Revolver("Anaconda", 1);
+                        break;
+                    } 
+                    else 
+                    {
+                        currWeapon = new BlankRevolver("Blank Revolver");
+                        break;
+                    }
                 }
                 else if (weaponChoice == 2) {
                     currWeapon = new DoubleBarrel("Double Barrel", 2);
                     break;
                 }
-                else if (weaponChoice == 3) {
-                    currWeapon = new BlankRevolver("Blank Anaconda");
-                    break;
-                }
-                else {
+                else
+                {
                     System.out.println("Invalid input!");
                     continue;
                 }
@@ -68,25 +78,33 @@ public class App
             System.out.println("Make a deal! Which weapon will you bring for the duel: ");
             System.out.println("1. Revolver");
             System.out.println("2. Double Barrel");
-            System.out.println("3. Another Revolver");
             Weapon currWeapon;
 
             while (true) {
                 int weaponChoice = input.nextInt();
                 input.nextLine();
+                
                 if (weaponChoice == 1) {
-                    currWeapon = new Revolver("Anaconda", 1);
-                    break;
+                    // Gacha revolver
+                    Random rand = new Random();
+                    boolean isLuck = rand.nextBoolean();
+                    if (isLuck) 
+                    {
+                        currWeapon = new Revolver("Anaconda", 1);
+                        break;
+                    } 
+                    else 
+                    {
+                        currWeapon = new BlankRevolver("Blank Revolver");
+                        break;
+                    }
                 }
                 else if (weaponChoice == 2) {
                     currWeapon = new DoubleBarrel("Double Barrel", 2);
                     break;
                 }
-                else if (weaponChoice == 3) {
-                    currWeapon = new BlankRevolver("Blank Anaconda");
-                    break;
-                }
-                else {
+                else
+                {
                     System.out.println("Invalid input!");
                     continue;
                 }
@@ -105,25 +123,33 @@ public class App
             System.out.println("Choose your weapon: ");
             System.out.println("1. Revolver");
             System.out.println("2. Double Barrel");
-            System.out.println("3. Another Revolver");
             Weapon currWeapon;
             
             while (true) {
                 int weaponChoice = input.nextInt();
                 input.nextLine();
+
                 if (weaponChoice == 1) {
-                    currWeapon = new Revolver("Anaconda", 1);
-                    break;
+                    // Gacha revolver
+                    Random rand = new Random();
+                    boolean isLuck = rand.nextBoolean();
+                    if (isLuck) 
+                    {
+                        currWeapon = new Revolver("Anaconda", 1);
+                        break;
+                    } 
+                    else 
+                    {
+                        currWeapon = new BlankRevolver("Blank Revolver");
+                        break;
+                    }
                 }
                 else if (weaponChoice == 2) {
                     currWeapon = new DoubleBarrel("Double Barrel", 2);
                     break;
                 }
-                else if (weaponChoice == 3) {
-                    currWeapon = new BlankRevolver("Blank Anaconda");
-                    break;
-                }
-                else {
+                else
+                {
                     System.out.println("Invalid input!");
                     continue;
                 }

@@ -60,8 +60,12 @@ public class Revolver extends Weapon
     @Override
     public void attack(Character target) 
     {
-        spinChamber();
         boolean result = shootCondition();
+        
+        if (!isSpun) 
+        {
+            spinChamber();
+        }
 
         if(result == true)
         {

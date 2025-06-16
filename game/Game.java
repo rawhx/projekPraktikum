@@ -150,11 +150,7 @@ public class Game
             {
                 System.out.println("\nCool Guy is making its move...");
                 Thread.sleep(1500);
-                if (weapon instanceof BlankRevolver) {
-                    weapon.attack(playerNow);  // AI dies if using blank revolver
-                } else {
-                    weapon.attack(otherPlayer);  // Normal attack
-                }
+                weapon.attack(playerNow);
             } 
             else {
                 while(true)
@@ -166,11 +162,7 @@ public class Game
 
                     if(playerInput == 1)
                     {
-                        if (weapon instanceof BlankRevolver) {
-                            weapon.attack(playerNow);  // Player dies if using blank revolver
-                        } else {
-                            weapon.attack(otherPlayer);  // Normal attack
-                        }
+                        weapon.attack(playerNow);
                         break;
                     }
                     else
