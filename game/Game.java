@@ -5,6 +5,7 @@ import weapon.*;
 import java.util.Scanner;
 import java.util.Random;
 
+
 public class Game 
 {
     Scanner input = new Scanner(System.in);
