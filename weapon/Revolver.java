@@ -53,7 +53,6 @@ public class Revolver extends Weapon
         if (currentChamber == 0) {
             isSpun = false;
         }
-
         return result;
     }
 
