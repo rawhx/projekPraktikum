@@ -1,5 +1,7 @@
 package weapon;
 
+import character.Character;
+
 public abstract class Weapon {
     private String name;
     private int damage;
