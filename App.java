@@ -28,35 +28,10 @@ public class App
             Player bot = new Player("Cool Guy", 5);
             Player p = new Player(nama, 5);
 
-            System.out.println("Choose your weapon: ");
-            System.out.println("1. Revolver");
-            System.out.println("2. Double Barrel");
-            System.out.println("3. Revolver");
-            Weapon currWeapon;
-
-            while (true) {
-                int weaponChoice = input.nextInt();
-                input.nextLine();
-                if (weaponChoice == 1) {
-                    currWeapon = new Revolver("Anaconda", 1);
-                    break;
-                }
-                else if (weaponChoice == 2) {
-                    currWeapon = new DoubleBarrel("Double Barrel", 2);
-                    break;
-                }
-                else if (weaponChoice == 3) {
-                    currWeapon = new BlankRevolver("Blank Anaconda");
-                    break;
-                }
-                else {
-                    System.out.println("Invalid input!");
-                    continue;
-                }
-            }
-
+            Weapon wp = inputWeapon(input);
+            
             Game game = new Game(p, bot, wp, true, false);
-            game.gameStart();
+            game.gameStart();    
         }
         else if(respon == 2)
         {
@@ -68,33 +43,8 @@ public class App
             String namaP2 = input.nextLine();
             Player p2 = new Player(namaP2, 5);
 
-            System.out.println("Make a deal! Which weapon will you bring for the duel: ");
-            System.out.println("1. Revolver");
-            System.out.println("2. Double Barrel");
-            System.out.println("3. Another Revolver");
-            Weapon currWeapon;
-
-            while (true) {
-                int weaponChoice = input.nextInt();
-                input.nextLine();
-                if (weaponChoice == 1) {
-                    currWeapon = new Revolver("Anaconda", 1);
-                    break;
-                }
-                else if (weaponChoice == 2) {
-                    currWeapon = new DoubleBarrel("Double Barrel", 2);
-                    break;
-                }
-                else if (weaponChoice == 3) {
-                    currWeapon = new BlankRevolver("Blank Anaconda");
-                    break;
-                }
-                else {
-                    System.out.println("Invalid input!");
-                    continue;
-                }
-            }
-
+            Weapon wp = inputWeapon(input);
+            
             Game game = new Game(p1, p2, wp, false, false);
             game.gameStart();
         }
@@ -104,34 +54,47 @@ public class App
             String nama = input.nextLine();
             Player survivor = new Player(nama, 5);
             Zombie zombie = new Zombie();
-
-            System.out.println("Choose your weapon: ");
-            System.out.println("1. Revolver");
-            System.out.println("2. Double Barrel");
-            System.out.println("3. Another Revolver");
-            Weapon currWeapon;
             
-            while (true) {
-                int weaponChoice = input.nextInt();
-                input.nextLine();
-                if (weaponChoice == 1) {
+            Weapon wp = inputWeapon(input);
+
+            Game game = new Game(survivor, zombie, wp, false, false);
+            game.gameStart();
+        }
+    }
+
+    private static Weapon inputWeapon(Scanner input) 
+    {
+        System.out.println("Choose your weapon: ");
+        System.out.println("1. Revolver");
+        System.out.println("2. Double Barrel");
+        Weapon currWeapon;
+
+        while (true) {
+            int weaponChoice = input.nextInt();
+            input.nextLine();
+
+            if (weaponChoice == 1) {
+                Random rand = new Random();
+                boolean luck = rand.nextBoolean();
+                if (luck) {
                     currWeapon = new Revolver("Anaconda", 1);
                     break;
-                }
-                else if (weaponChoice == 2) {
-                    currWeapon = new DoubleBarrel("Double Barrel", 2);
+                } else {
+                    currWeapon = new BlankRevolver("Blank Revolver");
                     break;
-                }
-                else if (weaponChoice == 3) {
-                    currWeapon = new BlankRevolver("Blank Anaconda");
-                    break;
-                }
-                else {
-                    System.out.println("Invalid input!");
-                    continue;
                 }
             }
+            else if (weaponChoice == 2) {
+                currWeapon = new DoubleBarrel("Double Barrel", 2);
+                break;
+            }
+            else {
+                System.out.println("Invalid input!");
+                continue;
+            }
+        }
 
         return currWeapon;
+
     }
 }
