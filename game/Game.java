@@ -4,8 +4,6 @@ import character.*;
 import character.Character;
 import weapon.*;
 import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 
@@ -97,7 +95,9 @@ public class Game
 
                 if (playerInput == 1) {
                     if (weapon instanceof BlankRevolver) {
+                        survivor.setHealth(0);
                         weapon.attack(survivor);  // Player mati
+                        System.out.println("You gave up on your live...");
                     } else {
                         weapon.attack(zombie);    // Tembak zombie
                     }
@@ -159,8 +159,17 @@ public class Game
                     int playerInput = input.nextInt();
 
                     if (playerInput == 1) {
-                        weapon.attack(playerNow);
-                        break;
+                        if(weapon instanceof BlankRevolver)
+                        {
+                            weapon.attack(playerNow);
+                            System.out.println("No one is going to get hurt today!");
+                            System.exit(0);
+                        }
+                        else
+                        {
+                            weapon.attack(playerNow);
+                            break;
+                        }
                     } else {
                         System.out.println("Invalid input, just throw your life on the table " + playerNow.getName() + ", my guy");
                     }
@@ -187,42 +196,42 @@ public class Game
     }
 
     private void showStatus() {
-        System.out.println("+---------------+");
-        System.out.printf("| %-4s | %-5s |\n", "Name", "Health");
-        System.out.println("+---------------+");
+        System.out.println("+-------------------------+");
+        System.out.printf("| %-10s | %-10s |\n", "Name", "Health");
+        System.out.println("+-------------------------+");
 
         for (Character c : characters) {
-            System.out.printf("| %-5s | %-5d |\n", c.getName(), c.getHealth());
+            System.out.printf("| %-10s | %-10d |\n", c.getName(), c.getHealth());
         }
 
-        System.out.println("+---------------+");
+        System.out.println("+-------------------------+");
     }
 
     private void showZombieStatus() {
         System.out.println("Survivor");
-        System.out.println("+---------------+");
-        System.out.printf("| %-4s | %-5s |\n", "Name", "Health");
-        System.out.println("+---------------+");
+        System.out.println("+-------------------------+");
+        System.out.printf("| %-10s | %-10s |\n", "Name", "Health");
+        System.out.println("+-------------------------+");
 
         for (Character c : characters) {
             if (!(c instanceof Zombie)) {
-                System.out.printf("| %-5s | %-5d |\n", c.getName(), c.getHealth());
+                System.out.printf("| %-10s | %-10d |\n", c.getName(), c.getHealth());
             }
         }
 
-        System.out.println("+---------------+");
+        System.out.println("+-------------------------+");
 
         System.out.println("\nZombie");
-        System.out.println("+---------------+");
-        System.out.printf("| %-4s | %-5s |\n", "Name", "Steps");
-        System.out.println("+---------------+");
+        System.out.println("+-------------------------+");
+        System.out.printf("| %-10s | %-10s |\n", "Name", "Steps");
+        System.out.println("+-------------------------+");
 
         for (Character c : characters) {
             if (c instanceof Zombie) {
-                System.out.printf("| %-5s | %-5d |\n", c.getName(), ((Zombie) c).getSteps());
+                System.out.printf("| %-10s | %-10d |\n", c.getName(), ((Zombie) c).getSteps());
             }
         }
 
-        System.out.println("+---------------+");
+        System.out.println("+-------------------------+");
     }
 }
