@@ -4,7 +4,7 @@ import weapon.*;
 import game.*;
 
 import java.util.Random;
-import java.util.Scanner;;
+import java.util.Scanner;
 
 public class App 
 {
