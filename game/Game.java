@@ -15,25 +15,11 @@ public class Game
     Random rand = new Random();
 
     private Character[] characters;
-    private Player player1;
-    private character.Character player2; // Bisa player atau zombie
     private Weapon weapon;
     private boolean isSinglePlayer;
     private boolean isZombieMode;
     private int shotsRemaining;
     private static final int MAX_SHOTS = 4;
-
-    public Game(Player player1, character.Character player2, Weapon weapon, boolean isSinglePlayer, boolean isZombieMode)
-    {
-        this.player1 = player1;
-        this.player2 = player2;
-        this.weapon = weapon;
-        this.isSinglePlayer = isSinglePlayer;
-        this.isZombieMode = isZombieMode;
-        if (isZombieMode) {
-            this.shotsRemaining = MAX_SHOTS;
-        }
-    }
 
     public Game(Character[] characters, Weapon weapon, boolean isSinglePlayer, boolean isZombieMode)
     {
