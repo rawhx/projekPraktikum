@@ -1,4 +1,5 @@
 import character.*;
+import character.Character;
 import weapon.*;
 import game.*;
 
@@ -9,6 +10,7 @@ public class App
 {
     public static void main(String[] args) 
     {
+        int MAXPLAYER = 5;
         Scanner input = new Scanner(System.in);
 
         System.out.println("Russian Roulette V 1.0");
@@ -24,28 +26,43 @@ public class App
         {
             System.out.print("Who should we call you ? ");
             String nama = input.nextLine();
-            
+
             Player bot = new Player("Cool Guy", 5);
             Player p = new Player(nama, 5);
 
+            Character[] characters = new Character[] { p, bot };
+
             Weapon wp = inputWeapon(input);
-            
-            Game game = new Game(p, bot, wp, true, false);
-            game.gameStart();    
+
+            Game game = new Game(characters, wp, true, false);
+            game.gameStart();
         }
         else if(respon == 2)
         {
-            System.out.print("Player 1: ");
-            String namaP1 = input.nextLine();
-            Player p1 = new Player(namaP1, 5);
+            int countPlayer = 0;
+           while (true) {
+                System.out.print("Masukkan jumlah pemain (min 2, max " + MAXPLAYER + "): ");
+                countPlayer = input.nextInt();
+                input.nextLine(); // bersihkan newline
 
-            System.out.print("Player 2: ");
-            String namaP2 = input.nextLine();
-            Player p2 = new Player(namaP2, 5);
+                if (countPlayer >= 2 && countPlayer <= MAXPLAYER) {
+                    break;
+                } else {
+                    System.out.println("Jumlah pemain tidak valid!");
+                }
+            }
 
+            Character[] characters = new Character[countPlayer];
+            
+            for (int i = 0; i < countPlayer; i++) {
+                System.out.print("Player " + (i + 1) + ": ");
+                String nama = input.nextLine();
+                characters[i] = new Player(nama, 5);
+            }
+           
             Weapon wp = inputWeapon(input);
             
-            Game game = new Game(p1, p2, wp, false, false);
+            Game game = new Game(characters, wp, false, false);
             game.gameStart();
         }
         else if(respon == 3)
@@ -54,10 +71,12 @@ public class App
             String nama = input.nextLine();
             Player survivor = new Player(nama, 5);
             Zombie zombie = new Zombie();
-            
+
+            Character[] characters = new Character[] { survivor, zombie };
+
             Weapon wp = inputWeapon(input);
 
-            Game game = new Game(survivor, zombie, wp, false, false);
+            Game game = new Game(characters, wp, false, true); // mode zombie
             game.gameStart();
         }
     }
