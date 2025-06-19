@@ -80,7 +80,9 @@ public class Game
                 if(playerInput == 1)
                 {
                     if (weapon instanceof BlankRevolver) {
-                        weapon.attack(player1);  // Player dies if using blank revolver
+                        survivor.setHealth(0);
+                        weapon.attack(survivor);  // Player mati
+                        System.out.println("You gave up on your live...");
                     } else {
                         weapon.attack(player2);  // Normal attack on zombie
                     }
@@ -181,9 +183,22 @@ public class Game
                 }
             }
 
-            // Kalau salah satu player mati, game over
-            if (otherPlayer.getHealth() <= 0) {
-                System.out.println("\nGame Over! " + playerNow.getName() + " wins!");
+            // Cek jumlah pemain yang masih hidup
+            int aliveCount = 0;
+            Character lastAlive = null;
+            for (Character c : characters) {
+                if (c.getHealth() > 0) {
+                    aliveCount++;
+                    lastAlive = c;
+                }
+            }
+
+            if (aliveCount == 1) {
+                System.out.println("\nGame Over! " + lastAlive.getName() + " wins!");
+                break;
+            }
+            else if(aliveCount >= 2){
+                System.out.println("No one is going to get hurt today!");
                 break;
             }
 
