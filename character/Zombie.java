@@ -18,9 +18,9 @@ public class Zombie extends Character {
         return steps >= MAX_STEPS;
     }
 
-    public void attackPlayer(Player player) {
+    public void attackPlayer(Character character) {
         System.out.println("The zombie has reached you! It's too late...");
-        player.setHealth(0);
+        character.setHealth(0);
     }
 
     public int getSteps() {
